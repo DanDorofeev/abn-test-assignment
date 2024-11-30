@@ -17,4 +17,8 @@ enum Constants {
   enum Icons {
     static let small: CGFloat = 16
   }
+  
+  enum CornerRadius {
+    static let small: CGFloat = 8
+  }
 }

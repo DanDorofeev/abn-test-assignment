@@ -11,6 +11,7 @@ import SwiftUI
 public extension Color {
   static let label = Color(UIColor.label)
   static let pin = Color(UIColor.secondaryLabel)
+  static let button = Color(UIColor.white)
   
   static let systemBackground = Color(UIColor.systemBackground)
   static let secondarySystemBackground = Color(UIColor.secondarySystemBackground)
