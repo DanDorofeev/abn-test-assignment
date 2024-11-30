@@ -1,6 +1,27 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "add.location.button.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save location"
+          }
+        }
+      }
+    },
+    "add.location.error.message" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location is not valid"
+          }
+        }
+      }
+    },
     "add.location.lat.label" : {
       "localizations" : {
         "en" : {
@@ -36,7 +57,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add a new Location"
+            "value" : "Add a new location"
           }
         }
       }
@@ -80,7 +101,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unsuccessful Response"
+            "value" : "Unsuccessful response"
           }
         }
       }
@@ -90,7 +111,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add Location"
+            "value" : "Add location"
           }
         }
       }

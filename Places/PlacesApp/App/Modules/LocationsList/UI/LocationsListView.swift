@@ -15,7 +15,7 @@ struct LocationsListView<VM: LocationsListViewModelProtocol>: View {
     var body: some View {
       NavigationStack {
         
-        VStack(spacing: 0) {
+        VStack {
           
           locationsList()
           .onAppear {
