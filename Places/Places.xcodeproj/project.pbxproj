@@ -6,14 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		53DB47602CFB2CF80098A507 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DB475F2CFB2CF80098A507 /* Endpoint.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		53DB47332CFA24960098A507 /* Places.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Places.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		53DB475F2CFB2CF80098A507 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		53DB47352CFA24960098A507 /* Places */ = {
+		53DB47352CFA24960098A507 /* PlacesApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Places;
+			path = PlacesApp;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +37,8 @@
 		53DB472A2CFA24960098A507 = {
 			isa = PBXGroup;
 			children = (
-				53DB47352CFA24960098A507 /* Places */,
+				53DB475F2CFB2CF80098A507 /* Endpoint.swift */,
+				53DB47352CFA24960098A507 /* PlacesApp */,
 				53DB47342CFA24960098A507 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,7 +67,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				53DB47352CFA24960098A507 /* Places */,
+				53DB47352CFA24960098A507 /* PlacesApp */,
 			);
 			name = Places;
 			packageProductDependencies = (
@@ -119,6 +125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53DB47602CFB2CF80098A507 /* Endpoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,10 +251,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Places/Places.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PlacesApp/Resources/Places.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Places/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PlacesApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -281,10 +288,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Places/Places.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PlacesApp/Resources/Places.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Places/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PlacesApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
