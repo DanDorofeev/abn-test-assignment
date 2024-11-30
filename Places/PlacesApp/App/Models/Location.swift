@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct LocationDTO: Decodable {
+  let locations: [Location]
+}
+
 struct Location: Decodable {
   let name: String?
   let lat: Double

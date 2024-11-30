@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol APIClient {
-  func getLocations() -> AnyPublisher<[Location], Error>
+  func getLocations() -> AnyPublisher<LocationDTO, Error>
 }
 
 final class AbnAPIClient: APIClient {
@@ -21,11 +21,11 @@ final class AbnAPIClient: APIClient {
     self.dataLoader = dataLoader
   }
   
-  func getLocations() -> AnyPublisher<[Location], Error> {
+  func getLocations() -> AnyPublisher<LocationDTO, Error> {
     dataLoader.execute(
       LocationsListEndpoint.locations(),
       httpMethod: .get,
-      decodingType: [Location].self,
+      decodingType: LocationDTO.self,
       queue: .main,
       retries: 0)
   }

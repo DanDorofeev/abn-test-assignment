@@ -13,10 +13,12 @@ protocol DataLoaderProtocol {
 }
 
 final class DataLoader: DataLoaderProtocol {
-  let session: URLSession
+  private let session: URLSession
+  private let configuration: URLSessionConfiguration
   
-  init(session: URLSession = .shared) {
-    self.session = session
+  init(configuration: URLSessionConfiguration = .default) {
+    self.configuration = configuration
+    session = URLSession(configuration: configuration)
   }
   
   func execute<T>(
