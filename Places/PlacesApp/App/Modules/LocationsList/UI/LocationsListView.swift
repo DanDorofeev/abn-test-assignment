@@ -12,10 +12,16 @@ struct LocationsListView<VM: LocationsListViewModelProtocol>: View {
   @ObservedObject var viewModel: VM
   
     var body: some View {
-        Text("Hello, World!")
-        .onAppear {
-          viewModel.loadLocations()
+      List {
+        Section {
+          ForEach(viewModel.locations) { location in
+            LocationCell(location: location)
+          }
         }
+      }
+      .onAppear {
+        viewModel.loadLocations()
+      }
     }
 }
 

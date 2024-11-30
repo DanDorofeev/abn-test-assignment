@@ -10,7 +10,7 @@ import Foundation
 #if DEBUG
 
 final class MockLocationsListViewModel: LocationsListViewModelProtocol {
-  var locations: [Location]?
+  var locations: [Location] = []
   
   var showError: Bool = false
   

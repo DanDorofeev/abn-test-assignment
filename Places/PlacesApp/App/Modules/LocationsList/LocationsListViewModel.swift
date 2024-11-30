@@ -9,14 +9,14 @@ import Foundation
 import Combine
 
 protocol LocationsListViewModelProtocol: ObservableObject {
-  var locations: [Location]? {get}
+  var locations: [Location] {get}
   var showError: Bool {get}
   func loadLocations()
 }
 
 final class LocationsListViewModel: LocationsListViewModelProtocol {
   
-  @Published var locations: [Location]?
+  @Published var locations: [Location] = []
   @Published private(set) var showError = false
   
   private let apiClient: APIClient
