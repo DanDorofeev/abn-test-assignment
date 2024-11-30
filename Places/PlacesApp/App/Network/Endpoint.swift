@@ -26,7 +26,7 @@ struct LocationsListEndpoint: Endpoint {
     return components.url
   }
   
-  static func getLocations() -> Endpoint {
+  static func locations() -> Endpoint {
     return LocationsListEndpoint(path: "/abnamrocoesd/assignment-ios/main/locations.json")
   }
 }

@@ -10,19 +10,23 @@ import Foundation
 enum APIError: Error {
   case invalidResponse
   case invalidData
-  case invalidURL
-  case invalidHTTPStatus(Int)
+  case invalidURL(URL?)
+  case unsuccessfulResponse
   
   var localizedDescription: String {
     switch self {
     case .invalidResponse:
-      return "Invalid response"
+      return NSLocalizedString("api.error.invalid.response", comment: "invalid response")
     case .invalidData:
-      return "Invalid data"
-    case .invalidURL:
-      return "Invalid URL"
-    case .invalidHTTPStatus(let status):
-      return "Invalid HTTP status: \(status)"
+      return NSLocalizedString("api.error.invalid.data", comment: "invalid data")
+    case .invalidURL(let url):
+      let localizedString = NSLocalizedString("api.error.invalid.url", comment: "invalid url %@")
+      if let url {
+        return String(format: localizedString, url.absoluteString)
+      }
+      return localizedString
+    case .unsuccessfulResponse:
+      return NSLocalizedString("api.error.unsuccessful.response", comment: "unsuccessful response")
     }
   }
 }
