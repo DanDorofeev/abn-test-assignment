@@ -11,17 +11,6 @@
         }
       }
     },
-    "add.location.error.message" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Location is not valid"
-          }
-        }
-      }
-    },
     "add.location.lat.label" : {
       "localizations" : {
         "en" : {
@@ -58,6 +47,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add a new location"
+          }
+        }
+      }
+    },
+    "alert.button.ok" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ok"
+          }
+        }
+      }
+    },
+    "alert.wiki.missing.message.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wiki App is not installed on this Device. Please install the app and try again"
           }
         }
       }

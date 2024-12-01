@@ -55,7 +55,6 @@ private extension AddLocationView {
     .buttonStyle(.borderedProminent)
     .frame(maxWidth: .infinity)
     .padding()
-    .opacity(viewModel.formIsValid ? 1 : 0.5)
     .disabled(!viewModel.formIsValid)
   }
 }

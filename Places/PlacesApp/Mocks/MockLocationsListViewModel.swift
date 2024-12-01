@@ -10,11 +10,15 @@ import Foundation
 #if DEBUG
 
 final class MockLocationsListViewModel: LocationsListViewModelProtocol {
+  var isWikiMissing: Bool = false
+  
   var locations: [Location] = []
   
   var showError: Bool = false
   
   func loadLocations() {}
+  
+  func openSelectedLocation(_ location: Location) {}
      
 }
 #endif

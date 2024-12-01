@@ -8,16 +8,16 @@
 import Foundation
 import Combine
 
-protocol APIClient {
+protocol LocationsServiceProtocol {
   func getLocations() -> AnyPublisher<LocationDTO, Error>
 }
 
-final class AbnAPIClient: APIClient {
-  private let dataLoader: DataLoaderProtocol
+final class LocationsService: LocationsServiceProtocol {
+  private let dataLoader: APIClientProtocol
   
   // MARK: - Lifecycle
   
-  init(dataLoader: DataLoaderProtocol = DataLoader()) {
+  init(dataLoader: APIClientProtocol = APIClient()) {
     self.dataLoader = dataLoader
   }
   

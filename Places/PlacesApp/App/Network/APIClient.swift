@@ -8,11 +8,11 @@
 import Combine
 import Foundation
 
-protocol DataLoaderProtocol {
+protocol APIClientProtocol {
   func execute<T>(_ endpoint: Endpoint, httpMethod: HTTPMethod, decodingType: T.Type, queue: DispatchQueue, retries: Int) -> AnyPublisher<T, Error> where T: Decodable
 }
 
-final class DataLoader: DataLoaderProtocol {
+final class APIClient: APIClientProtocol {
   private let session: URLSession
   private let configuration: URLSessionConfiguration
   

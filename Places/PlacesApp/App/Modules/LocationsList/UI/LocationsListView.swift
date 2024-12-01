@@ -12,6 +12,7 @@ struct LocationsListView<VM: LocationsListViewModelProtocol>: View {
   @ObservedObject var viewModel: VM
   @EnvironmentObject var viewModelFactory: ViewModelFactory
   @State var showAddLocationScreen = false
+  @State var showAlert = false
   
     var body: some View {
       NavigationStack {        
@@ -30,10 +31,20 @@ struct LocationsListView<VM: LocationsListViewModelProtocol>: View {
 private extension LocationsListView {
   func locationsList() -> some View {
     List {
-        ForEach(viewModel.locations) { location in
+      ForEach(viewModel.locations) { location in
+        Button {
+          viewModel.openSelectedLocation(location)
+        } label: {
           LocationCell(location: location)
         }
+      }
       .headerProminence(.increased)
+    }
+    .onChange(of: viewModel.isWikiMissing) {
+      showAlert.toggle()
+    }
+    .alert(LocalizedStringKey("alert.wiki.missing.message.title"), isPresented: $showAlert) {
+        Button(LocalizedStringKey("alert.button.ok"), role: .cancel) { }
     }
   }
   
