@@ -24,14 +24,16 @@ final class AddLocationViewModel: AddLocationViewModelProtocol {
   @Published var long: String?
   @Published private(set) var formIsValid: Bool
   private let locationValidator: LocationValidatorProtocol
-  
+  private let locationsController: any LocationsControllerProtocol
   private var publishers: Set<AnyCancellable>
   
   init(
+    locationsController: any LocationsControllerProtocol,
     locationValidator: LocationValidatorProtocol = LocationValidator()
   ) {
+    self.locationsController = locationsController
     self.locationValidator = locationValidator
-    
+        
     formIsValid = false
     publishers = Set<AnyCancellable>()
     
@@ -44,7 +46,8 @@ final class AddLocationViewModel: AddLocationViewModelProtocol {
   func saveLocation() {
     guard let lat, let long,
             let lattitude = Double(lat), let longitude = Double(long) else {return}
-    let location = Location(name: name, lat: lattitude, long: longitude)    
+    let location = Location(name: name, lat: lattitude, long: longitude)
+    locationsController.addLocation(location)
   }
 }
 

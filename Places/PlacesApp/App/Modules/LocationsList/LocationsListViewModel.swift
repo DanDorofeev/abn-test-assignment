@@ -20,15 +20,25 @@ final class LocationsListViewModel: LocationsListViewModelProtocol {
   @Published private(set) var showError: Bool
   
   private let apiClient: APIClient
+  private let locationsController: LocationsController
   private var publishers: Set<AnyCancellable>
   
   init(
+    locationsController: LocationsController,
     apiClient: APIClient = AbnAPIClient()
   ) {
-    self.apiClient = apiClient    
+    self.locationsController = locationsController
+    self.apiClient = apiClient
     locations = .init([])
     showError = false
     publishers = Set<AnyCancellable>()
+    
+    loadLocations()
+    
+    locationsController.$locations.sink { [weak self] in
+      self?.locations = $0
+    }
+    .store(in: &publishers)
   }
   
   func loadLocations() {
@@ -39,7 +49,7 @@ final class LocationsListViewModel: LocationsListViewModelProtocol {
             self?.showError = true
         }
       } receiveValue: { [weak self] response in
-        self?.locations = response.locations
+        self?.locationsController.addLocations(response.locations)
       }
       .store(in: &publishers)
   }

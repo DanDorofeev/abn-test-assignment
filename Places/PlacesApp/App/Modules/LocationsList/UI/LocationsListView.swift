@@ -10,21 +10,18 @@ import SwiftUI
 struct LocationsListView<VM: LocationsListViewModelProtocol>: View {
   
   @ObservedObject var viewModel: VM
+  @EnvironmentObject var viewModelFactory: ViewModelFactory
   @State var showAddLocationScreen = false
   
     var body: some View {
-      NavigationStack {
-        
+      NavigationStack {        
         VStack {
-          
           locationsList()
-          .onAppear {
-            viewModel.loadLocations()
-          }
                
           addLocationButton()
         }
-      }
+        .navigationBarTitle(Text(LocalizedStringKey("locations.list.section.title")))
+      }      
     }
 }
 
@@ -33,11 +30,9 @@ struct LocationsListView<VM: LocationsListViewModelProtocol>: View {
 private extension LocationsListView {
   func locationsList() -> some View {
     List {
-      Section(header: Text(LocalizedStringKey("locations.list.section.title"))) {
         ForEach(viewModel.locations) { location in
           LocationCell(location: location)
         }
-      }
       .headerProminence(.increased)
     }
   }
@@ -56,8 +51,8 @@ private extension LocationsListView {
     .frame(maxWidth: .infinity)
     .padding()
     .navigationDestination(isPresented: $showAddLocationScreen) {
-      AddLocationView(viewModel: AddLocationViewModel())
-    }    
+      AddLocationView(viewModel: viewModelFactory.makeAddLocationViewModel())
+    }
   }
 }
 
