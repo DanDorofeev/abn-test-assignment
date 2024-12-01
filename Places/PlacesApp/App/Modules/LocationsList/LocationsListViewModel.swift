@@ -12,7 +12,7 @@ import UIKit
 protocol LocationsListViewModelProtocol: ObservableObject {
   var locations: [Location] {get}
   var showError: Bool {get}
-  var isWikiMissing: Bool {get}
+  var isWikiMissing: Bool {get set}
   func openSelectedLocation(_ location: Location)
 }
 
@@ -20,7 +20,7 @@ final class LocationsListViewModel: LocationsListViewModelProtocol {
   
   @Published private(set) var locations: [Location]
   @Published private(set) var showError: Bool
-  @Published private(set) var isWikiMissing: Bool
+  @Published var isWikiMissing: Bool
   
   private let locationsService: LocationsServiceProtocol
   private let locationsController: any LocationsControllerProtocol
@@ -49,8 +49,8 @@ final class LocationsListViewModel: LocationsListViewModelProtocol {
     .store(in: &publishers)
   }
   
-  func openSelectedLocation(_ location: Location) {
-    guard wikiAppChecker.isWikiAppInstalled() else {
+  func openSelectedLocation(_ location: Location) {    
+    guard wikiAppChecker.canOpenWikiScheme() else {
       isWikiMissing = true
       return
     }

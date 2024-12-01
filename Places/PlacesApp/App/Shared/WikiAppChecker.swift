@@ -9,14 +9,14 @@ import Foundation
 import UIKit
 
 protocol WikiAppCheckerProtocol {
-  func isWikiAppInstalled() -> Bool
+  func canOpenWikiScheme() -> Bool
 }
 
 final class WikiAppChecker: WikiAppCheckerProtocol {
-  func isWikiAppInstalled() -> Bool {
-    guard let url = URL(string: "wikipedia://") else {
+  func canOpenWikiScheme() -> Bool {
+    guard let url = URL(string: "wikipedia://app") else {
         return false
-    }
+    }    
     return UIApplication.shared.canOpenURL(url)
   }
 }

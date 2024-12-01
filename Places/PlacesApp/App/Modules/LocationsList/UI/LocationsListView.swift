@@ -12,7 +12,6 @@ struct LocationsListView<VM: LocationsListViewModelProtocol>: View {
   @ObservedObject var viewModel: VM
   @EnvironmentObject var viewModelFactory: ViewModelFactory
   @State var showAddLocationScreen = false
-  @State var showAlert = false
   
     var body: some View {
       NavigationStack {        
@@ -40,11 +39,8 @@ private extension LocationsListView {
       }
       .headerProminence(.increased)
     }
-    .onChange(of: viewModel.isWikiMissing) {
-      showAlert.toggle()
-    }
-    .alert(LocalizedStringKey("alert.wiki.missing.message.title"), isPresented: $showAlert) {
-        Button(LocalizedStringKey("alert.button.ok"), role: .cancel) { }
+    .alert(LocalizedStringKey("alert.wiki.missing.message.title"), isPresented: $viewModel.isWikiMissing) {
+        Button(LocalizedStringKey("alert.button.ok"), role: .cancel) {}
     }
   }
   
