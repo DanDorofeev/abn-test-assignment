@@ -16,18 +16,23 @@ protocol LocationsListViewModelProtocol: ObservableObject {
 
 final class LocationsListViewModel: LocationsListViewModelProtocol {
   
-  @Published var locations: [Location] = []
-  @Published private(set) var showError = false
+  @Published private(set) var locations: [Location]
+  @Published private(set) var showError: Bool
   
   private let apiClient: APIClient
-  private var cancellable: AnyCancellable?
+  private var publishers: Set<AnyCancellable>
   
-  init(apiClient: APIClient = AbnAPIClient()) {
-      self.apiClient = apiClient
+  init(
+    apiClient: APIClient = AbnAPIClient()
+  ) {
+    self.apiClient = apiClient    
+    locations = .init([])
+    showError = false
+    publishers = Set<AnyCancellable>()
   }
   
   func loadLocations() {
-    cancellable = apiClient.getLocations()
+    apiClient.getLocations()
       .sink { [weak self] completion in
         if case .failure(let error) = completion {
             debugPrint(error.localizedDescription)
@@ -36,5 +41,6 @@ final class LocationsListViewModel: LocationsListViewModelProtocol {
       } receiveValue: { [weak self] response in
         self?.locations = response.locations
       }
+      .store(in: &publishers)
   }
 }

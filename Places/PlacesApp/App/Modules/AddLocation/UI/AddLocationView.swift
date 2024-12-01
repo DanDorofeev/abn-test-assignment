@@ -10,7 +10,8 @@ import Combine
 
 struct AddLocationView<VM: AddLocationViewModelProtocol>: View {
   
-  @ObservedObject var viewModel: VM  
+  @ObservedObject var viewModel: VM
+  @Environment(\.dismiss) var dismiss
   
   var body: some View {
     VStack {     
@@ -43,6 +44,7 @@ private extension AddLocationView {
   func saveLocation() -> some View {
     Button {
       viewModel.saveLocation()
+      dismiss()
     } label: {
         Text(LocalizedStringKey("add.location.button.title"))
         .padding()

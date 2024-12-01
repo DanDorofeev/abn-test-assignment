@@ -7,7 +7,6 @@
 
 import Foundation
 import Combine
-import CoreLocation
 
 protocol AddLocationViewModelProtocol: ObservableObject {
   var formIsValid: Bool {get}
@@ -23,11 +22,19 @@ final class AddLocationViewModel: AddLocationViewModelProtocol {
   @Published var name: String?
   @Published var lat: String?
   @Published var long: String?
-  @Published private(set) var formIsValid: Bool = false
+  @Published private(set) var formIsValid: Bool
+  private let locationValidator: LocationValidatorProtocol
   
-  private var publishers = Set<AnyCancellable>()
+  private var publishers: Set<AnyCancellable>
   
-  init() {
+  init(
+    locationValidator: LocationValidatorProtocol = LocationValidator()
+  ) {
+    self.locationValidator = locationValidator
+    
+    formIsValid = false
+    publishers = Set<AnyCancellable>()
+    
     isLocationFormValidPublisher
       .receive(on: RunLoop.main)
       .assign(to: \.formIsValid, on: self)
@@ -35,7 +42,9 @@ final class AddLocationViewModel: AddLocationViewModelProtocol {
   }
   
   func saveLocation() {
-    
+    guard let lat, let long,
+            let lattitude = Double(lat), let longitude = Double(long) else {return}
+    let location = Location(name: name, lat: lattitude, long: longitude)    
   }
 }
 
@@ -48,16 +57,7 @@ private extension AddLocationViewModel {
         guard let longitude, !longitude.isEmpty,
               let lattitude, !lattitude.isEmpty else {return false}
         
-        return self?.isLocationValid(lat: lattitude, long: longitude) ?? false
+        return self?.locationValidator.isLocationValid(lat: lattitude, long: longitude) ?? false
       }.eraseToAnyPublisher()
-  }
-    
-  func isLocationValid(lat: String, long: String) -> Bool {
-    guard let latitude = Double(lat), let longitude = Double(long) else {
-      return false
-    }
-        
-    let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-    return CLLocationCoordinate2DIsValid(coordinates)
-  }
+  }      
 }
