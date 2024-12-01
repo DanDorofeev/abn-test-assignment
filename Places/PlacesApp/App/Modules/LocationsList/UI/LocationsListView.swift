@@ -17,7 +17,7 @@ struct LocationsListView<VM: LocationsListViewModelProtocol>: View {
       NavigationStack {        
         VStack {
           locationsList()
-               
+                                   
           addLocationButton()
         }
         .navigationBarTitle(Text(LocalizedStringKey("locations.list.section.title")))

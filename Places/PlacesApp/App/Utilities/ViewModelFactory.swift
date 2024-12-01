@@ -7,8 +7,12 @@
 
 import Foundation
 
-class ViewModelFactory: ObservableObject {
-  let locationsController = LocationsController()
+final class ViewModelFactory: ObservableObject {
+  private(set) var locationsController: any LocationsControllerProtocol
+  
+  init(locationsController: any LocationsControllerProtocol = LocationsController()) {
+    self.locationsController = locationsController
+  }
   
   func makeLocationsListViewModel() -> LocationsListViewModel {
     .init(locationsController: locationsController)

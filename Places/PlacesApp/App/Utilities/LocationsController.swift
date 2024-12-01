@@ -8,14 +8,16 @@
 import Foundation
 
 protocol LocationsControllerProtocol: ObservableObject {
-  var locations: [Location] {get}
+  var locationsPublisher: Published<[Location]>.Publisher {get}
   
   func addLocations(_ locations: [Location])
   func addLocation(_ location: Location)
 }
 
 final class LocationsController: LocationsControllerProtocol {
-  @Published private(set) var locations: [Location] = []
+  @Published private var locations: [Location] = []
+  
+  var locationsPublisher: Published<[Location]>.Publisher {$locations}
   
   func addLocations(_ locations: [Location]) {
     self.locations = locations
