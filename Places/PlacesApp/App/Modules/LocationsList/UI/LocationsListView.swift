@@ -21,7 +21,10 @@ struct LocationsListView<VM: LocationsListViewModelProtocol>: View {
           addLocationButton()
         }
         .navigationBarTitle(Text(LocalizedStringKey("locations.list.section.title")))
-      }      
+      }
+      .task {
+        await viewModel.loadLocations()
+      }
     }
 }
 

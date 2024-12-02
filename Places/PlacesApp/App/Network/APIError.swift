@@ -12,6 +12,7 @@ enum APIError: Error {
   case invalidData
   case invalidURL(URL?)
   case unsuccessfulResponse
+  case decodingError
   
   var localizedDescription: String {
     switch self {
@@ -27,6 +28,8 @@ enum APIError: Error {
       return localizedString
     case .unsuccessfulResponse:
       return NSLocalizedString("api.error.unsuccessful.response", comment: "unsuccessful response")
+    case .decodingError:
+      return NSLocalizedString("api.error.decoding.error", comment: "decoding error")
     }
   }
 }

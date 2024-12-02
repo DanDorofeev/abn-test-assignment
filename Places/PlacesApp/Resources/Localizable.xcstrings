@@ -71,6 +71,17 @@
         }
       }
     },
+    "api.error.decoding.error" : {
+      "comment" : "decoding error",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Decoding error"
+          }
+        }
+      }
+    },
     "api.error.invalid.data" : {
       "extractionState" : "manual",
       "localizations" : {

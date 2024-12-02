@@ -9,24 +9,19 @@ import Foundation
 import Combine
 
 protocol LocationsServiceProtocol {
-  func getLocations() -> AnyPublisher<LocationDTO, Error>
+  func getLocations() async throws -> LocationDTO
 }
 
 final class LocationsService: LocationsServiceProtocol {
-  private let dataLoader: APIClientProtocol
+  private let apiClient: APIClientProtocol
   
   // MARK: - Lifecycle
   
-  init(dataLoader: APIClientProtocol = APIClient()) {
-    self.dataLoader = dataLoader
+  init(apiClient: APIClientProtocol = APIClient()) {
+    self.apiClient = apiClient
   }
   
-  func getLocations() -> AnyPublisher<LocationDTO, Error> {
-    dataLoader.execute(
-      LocationsListEndpoint.locations(),
-      httpMethod: .get,
-      decodingType: LocationDTO.self,
-      queue: .main,
-      retries: 0)
+  func getLocations() async throws -> LocationDTO {
+    try await apiClient.request(LocationsListEndpoint.locations(), httpMethod: .get)
   }
 }

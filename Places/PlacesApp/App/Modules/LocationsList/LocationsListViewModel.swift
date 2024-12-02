@@ -13,6 +13,7 @@ protocol LocationsListViewModelProtocol: ObservableObject {
   var locations: [Location] {get}
   var showError: Bool {get}
   var isWikiMissing: Bool {get set}
+  func loadLocations() async
   func openSelectedLocation(_ location: Location)
 }
 
@@ -48,8 +49,23 @@ final class LocationsListViewModel: LocationsListViewModelProtocol {
     }
     .store(in: &publishers)
   }
+      
+  func loadLocations() async {
+    Task {
+      do {
+        let response = try await locationsService.getLocations()
+        await MainActor.run {
+          self.locationsController.addLocations(response.locations)
+        }
+      } catch _ {        
+        await MainActor.run {
+          self.showError = true
+        }
+      }
+    }
+  }
   
-  func openSelectedLocation(_ location: Location) {    
+  func openSelectedLocation(_ location: Location) {
     guard wikiAppChecker.canOpenWikiScheme() else {
       isWikiMissing = true
       return

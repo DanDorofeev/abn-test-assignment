@@ -5,11 +5,10 @@
 //  Created by Daniil Dorofieiev on 30/11/2024.
 //
 
-import Combine
 import Foundation
 
 protocol APIClientProtocol {
-  func execute<T>(_ endpoint: Endpoint, httpMethod: HTTPMethod, decodingType: T.Type, queue: DispatchQueue, retries: Int) -> AnyPublisher<T, Error> where T: Decodable
+  func request<T: Decodable>(_ endpoint: Endpoint, httpMethod: HTTPMethod) async throws -> T
 }
 
 final class APIClient: APIClientProtocol {
@@ -21,15 +20,10 @@ final class APIClient: APIClientProtocol {
     session = URLSession(configuration: configuration)
   }
   
-  func execute<T>(
-  _ endpoint: Endpoint,
-  httpMethod: HTTPMethod,
-  decodingType: T.Type,
-  queue: DispatchQueue,
-  retries: Int) -> AnyPublisher<T, Error> where T: Decodable {
+  func request<T: Decodable>(_ endpoint: Endpoint, httpMethod: HTTPMethod) async throws -> T {
     
     guard let url = endpoint.url else {
-        return Fail(error: APIError.invalidURL(endpoint.url)).eraseToAnyPublisher()
+        throw APIError.invalidURL(endpoint.url)
     }
     
     var request = URLRequest(url: url)
@@ -37,16 +31,18 @@ final class APIClient: APIClientProtocol {
     request.addValue("application/json",forHTTPHeaderField: "Accept")
     request.httpMethod = httpMethod.rawValue
     
-    return URLSession.shared.dataTaskPublisher(for: request)
-        .tryMap {
-            guard let response = $0.response as? HTTPURLResponse, response.statusCode == 200 else {
-              throw APIError.unsuccessfulResponse
-            }
-            return $0.data
-        }
-        .decode(type: T.self, decoder: JSONDecoder())
-        .receive(on: queue)
-        .retry(retries)
-        .eraseToAnyPublisher()
+    let (data, response) = try await session.data(for: request)
+    let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 400
+    
+    switch statusCode {
+    case 200:
+      do {
+        return try JSONDecoder().decode(T.self, from: data)
+      } catch {
+        throw APIError.decodingError
+      }
+    default:
+      throw APIError.unsuccessfulResponse
+    }
   }
 }
