@@ -16,14 +16,14 @@ final class DeeplinkBuilder: DeeplinkBuilderProtocol {
   func buildDeeplink(for location: Location) -> URL {
     var urlComponents = URLComponents()
     urlComponents.scheme = "wikipedia"
-    urlComponents.host = "places"
+    urlComponents.host = "namedPlace"
     urlComponents.queryItems = [
       URLQueryItem(name: "latitude", value: String(location.lat)),
       URLQueryItem(name: "longitude", value: String(location.long)),
     ]
     if let name = location.name {
       urlComponents.queryItems?.append(
-        URLQueryItem(name: "name", value: name)
+        URLQueryItem(name: "locationName", value: name)
       )
     }
     if let url = urlComponents.url {
