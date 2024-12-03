@@ -7,8 +7,9 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
-protocol LocationsListViewModelProtocol: ObservableObject {
+protocol LocationsListViewModelProtocol: Observable, AnyObject {
   var locations: [Location] {get}
   var showError: Bool {get}
   var isWikiMissing: Bool {get set}
@@ -16,18 +17,19 @@ protocol LocationsListViewModelProtocol: ObservableObject {
   func openSelectedLocation(_ location: Location)
 }
 
+@Observable
 final class LocationsListViewModel: LocationsListViewModelProtocol {
   
-  @Published private(set) var locations: [Location]
-  @Published private(set) var showError: Bool
-  @Published var isWikiMissing: Bool
+  private(set) var locations: [Location]
+  private(set) var showError: Bool
+  var isWikiMissing: Bool
   
-  private let locationsService: LocationsServiceProtocol
-  private let locationsController: any LocationsControllerProtocol
-  private let wikiAppChecker: WikiAppCheckerProtocol
-  private let deeplinkBuilder: DeeplinkBuilderProtocol
-  private let locationsRouter: LocationsRouterProtocol
-  private var publishers: Set<AnyCancellable>
+  @ObservationIgnored private let locationsService: LocationsServiceProtocol
+  @ObservationIgnored private let locationsController: any LocationsControllerProtocol
+  @ObservationIgnored private let wikiAppChecker: WikiAppCheckerProtocol
+  @ObservationIgnored private let deeplinkBuilder: DeeplinkBuilderProtocol
+  @ObservationIgnored private let locationsRouter: LocationsRouterProtocol
+  @ObservationIgnored private var publishers: Set<AnyCancellable>
   
   init(
     locationsController: any LocationsControllerProtocol,

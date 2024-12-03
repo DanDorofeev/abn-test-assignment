@@ -15,7 +15,7 @@ struct PlacesApp: App {
   var body: some Scene {
       WindowGroup {
         LocationsListView(viewModel: viewModelFactory.makeLocationsListViewModel())
-          .environmentObject(viewModelFactory)
+          .environment(viewModelFactory)
       }
   }
 }

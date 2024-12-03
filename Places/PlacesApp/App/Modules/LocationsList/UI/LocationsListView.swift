@@ -9,8 +9,8 @@ import SwiftUI
 
 struct LocationsListView<VM: LocationsListViewModelProtocol>: View {
   
-  @ObservedObject var viewModel: VM
-  @EnvironmentObject var viewModelFactory: ViewModelFactory
+  @Bindable var viewModel: VM
+  @Environment(ViewModelFactory.self) private var viewModelFactory
   @State var showAddLocationScreen = false
   
     var body: some View {

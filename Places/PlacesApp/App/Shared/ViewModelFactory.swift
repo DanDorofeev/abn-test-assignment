@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import SwiftUI
 
-final class ViewModelFactory: ObservableObject {
+@Observable
+final class ViewModelFactory {
   private(set) var locationsController: any LocationsControllerProtocol
   
   init(locationsController: any LocationsControllerProtocol = LocationsController()) {
