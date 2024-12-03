@@ -29,7 +29,7 @@ final class AddLocationViewModel: AddLocationViewModelProtocol {
   
   init(
     locationsController: any LocationsControllerProtocol,
-    locationValidator: LocationValidatorProtocol = LocationValidator()
+    locationValidator: LocationValidatorProtocol
   ) {
     self.locationsController = locationsController
     self.locationValidator = locationValidator

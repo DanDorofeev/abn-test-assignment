@@ -33,10 +33,10 @@ final class LocationsListViewModel: LocationsListViewModelProtocol {
   
   init(
     locationsController: any LocationsControllerProtocol,
-    locationsService: LocationsServiceProtocol = LocationsService(),
-    wikiAppChecker: WikiAppCheckerProtocol = WikiAppChecker(),
-    deeplinkBuilder: DeeplinkBuilderProtocol = DeeplinkBuilder(),
-    locationsRouter: LocationsRouterProtocol = LocationsRouter()
+    locationsService: LocationsServiceProtocol,
+    wikiAppChecker: WikiAppCheckerProtocol,
+    deeplinkBuilder: DeeplinkBuilderProtocol,
+    locationsRouter: LocationsRouterProtocol
   ) {
     self.locationsController = locationsController
     self.locationsService = locationsService
