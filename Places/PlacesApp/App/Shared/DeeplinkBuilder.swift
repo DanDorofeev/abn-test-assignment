@@ -21,7 +21,7 @@ final class DeeplinkBuilder: DeeplinkBuilderProtocol {
       URLQueryItem(name: "latitude", value: String(location.lat)),
       URLQueryItem(name: "longitude", value: String(location.long)),
     ]
-    if let name = location.name {
+    if let name = location.name, !name.isEmpty {
       urlComponents.queryItems?.append(
         URLQueryItem(name: "locationName", value: name)
       )

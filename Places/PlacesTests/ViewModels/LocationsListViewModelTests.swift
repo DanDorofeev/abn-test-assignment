@@ -11,17 +11,17 @@ import Combine
 final class LocationsListViewModelTests: XCTestCase {
   
   var sut: LocationsListViewModel!
-  var locationsController: (any LocationsControllerProtocol)?
+//  var locationsController: (any LocationsControllerProtocol)?
   
   override func setUp() {
     super.setUp()
-    locationsController = LocationsController()
-    sut = LocationsListViewModel(locationsController: locationsController)
+//    locationsController = LocationsController()
+//    sut = LocationsListViewModel(locationsController: locationsController)
   }
   
   override func tearDown() {
     sut = nil
-    locationsController = nil
+//    locationsController = nil
     super.tearDown()
   }
   

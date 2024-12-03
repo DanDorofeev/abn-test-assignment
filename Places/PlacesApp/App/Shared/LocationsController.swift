@@ -24,7 +24,7 @@ final class LocationsController: LocationsControllerProtocol {
    
   //MARK: - Lifecycle
   
-  init(locationsService: LocationsServiceProtocol = LocationsService()) {
+  init(locationsService: LocationsServiceProtocol) {
     self.locationsService = locationsService
   }
   

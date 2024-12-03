@@ -26,10 +26,28 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				App/Models/Location.swift,
+				App/Modules/AddLocation/AddLocationViewModel.swift,
 				App/Modules/LocationsList/LocationsListViewModel.swift,
+				App/Network/APIClient.swift,
+				App/Network/APIError.swift,
+				App/Network/Endpoint.swift,
+				App/Network/HTTPMethod.swift,
+				App/Network/Services/LocationsService.swift,
+				App/Shared/DeeplinkBuilder.swift,
 				App/Shared/LocationsController.swift,
+				App/Shared/LocationsRouter.swift,
+				App/Shared/LocationValidator.swift,
+				App/Shared/ViewModelFactory.swift,
+				App/Shared/WikiAppChecker.swift,
 			);
 			target = 539066DC2CFE2E9500683E6D /* PlacesTests */;
+		};
+		539067012CFF73C300683E6D /* Exceptions for "PlacesTests" folder in "Places" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Stub/StubLocation.swift,
+			);
+			target = 53DB47322CFA24960098A507 /* Places */;
 		};
 		53D9BA992CFCBDB90083FACD /* Exceptions for "PlacesApp" folder in "Places" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -43,6 +61,9 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		539066DE2CFE2E9500683E6D /* PlacesTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				539067012CFF73C300683E6D /* Exceptions for "PlacesTests" folder in "Places" target */,
+			);
 			path = PlacesTests;
 			sourceTree = "<group>";
 		};

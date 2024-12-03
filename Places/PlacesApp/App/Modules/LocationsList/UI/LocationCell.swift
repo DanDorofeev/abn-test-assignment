@@ -37,5 +37,5 @@ struct LocationCell: View {
 }
 
 #Preview {
-  LocationCell(location: Location.testLocation)
+  LocationCell(location: Location.fullLocation)
 }

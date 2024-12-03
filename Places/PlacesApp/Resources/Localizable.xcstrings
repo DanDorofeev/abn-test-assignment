@@ -126,6 +126,16 @@
         }
       }
     },
+    "locations.error.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Something went wrong"
+          }
+        }
+      }
+    },
     "locations.list.button.title" : {
       "localizations" : {
         "en" : {

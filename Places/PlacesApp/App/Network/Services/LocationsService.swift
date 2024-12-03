@@ -17,7 +17,7 @@ final class LocationsService: LocationsServiceProtocol {
   
   // MARK: - Lifecycle
   
-  init(apiClient: APIClientProtocol = APIClient()) {
+  init(apiClient: APIClientProtocol) {
     self.apiClient = apiClient
   }
   

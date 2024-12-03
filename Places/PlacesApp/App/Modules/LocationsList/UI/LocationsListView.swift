@@ -16,9 +16,13 @@ struct LocationsListView<VM: LocationsListViewModelProtocol>: View {
     var body: some View {
       NavigationStack {        
         VStack {
-          locationsList()
-                                   
-          addLocationButton()
+          if viewModel.showError {
+            showErrorMessage()
+          } else {
+            locationsList()
+            
+            addLocationButton()
+          }
         }
         .navigationBarTitle(Text(LocalizedStringKey("locations.list.section.title")))
       }
@@ -31,6 +35,13 @@ struct LocationsListView<VM: LocationsListViewModelProtocol>: View {
 // MARK: - Private
 
 private extension LocationsListView {
+  
+  func showErrorMessage() -> some View {
+    Text(LocalizedStringKey("locations.error.title"))
+      .font(.headline)
+      .foregroundColor(.label)
+  }
+  
   func locationsList() -> some View {
     List {
       ForEach(viewModel.locations) { location in
