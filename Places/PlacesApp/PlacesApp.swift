@@ -14,7 +14,7 @@ struct PlacesApp: App {
         
         let apiClient = APIClient()
         let locationService = LocationsService(apiClient: apiClient)
-        let locationsController = LocationsController(locationsService: locationService)
+        let locationsController = LocationsController()
         let wikiAppChecker = WikiAppChecker()
         let deeplinkBuilder = DeeplinkBuilder()
         let locationValidator = LocationValidator()

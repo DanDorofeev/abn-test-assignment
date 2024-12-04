@@ -16,20 +16,14 @@ protocol LocationsControllerProtocol: ObservableObject {
 
 final class LocationsController: LocationsControllerProtocol {
   @Published private var locations: [Location] = []
-  private let locationsService: LocationsServiceProtocol
   
   var locationsPublisher: Published<[Location]>.Publisher {
     $locations
   }
-   
-  //MARK: - Lifecycle
-  
-  init(locationsService: LocationsServiceProtocol) {
-    self.locationsService = locationsService
-  }
-  
+       
   func addLocations(_ locations: [Location]) {
-    self.locations = locations
+    self.locations.removeAll()
+    self.locations = locations        
   }
   
   func addLocation(_ location: Location) {

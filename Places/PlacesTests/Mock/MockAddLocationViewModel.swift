@@ -11,11 +11,8 @@ import Foundation
 
 final class MockAddLocationViewModel: AddLocationViewModelProtocol {
   var formIsValid: Bool = true
-  
   var name: String? = ""
-  
-  var lat: String? = ""
-  
+  var lat: String? = ""  
   var long: String? = ""
   
   func saveLocation() {}    

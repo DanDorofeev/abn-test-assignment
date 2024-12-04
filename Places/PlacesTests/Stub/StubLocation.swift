@@ -8,6 +8,20 @@
 import Foundation
 
 #if DEBUG
+
+extension LocationDTO {
+  static var testLocations: LocationDTO {
+    .init(locations: [
+        Location.fullLocation,
+        Location.emptyNameLocation
+      ])
+  }
+  
+  static var emptyResults: LocationDTO {
+    .init(locations: [])
+  }
+}
+
 extension Location {
   static var fullLocation: Location {
     .init(
