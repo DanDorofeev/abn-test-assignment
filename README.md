@@ -1,10 +1,10 @@
 # abn-test-assignment
 
-###**Project setup**
+### **Project setup**
 
 - Use [Wiki App](https://github.com/DanDorofeev/wikipedia-ios) to build the project on your device
 
-###**Project description**
+### **Project description**
 
 - The assignment has been finished in ~10 hours which included project setup, writing code + tests coverage.
 
@@ -26,7 +26,7 @@
 
 - Project is covered with Unit tests
 
-###**What can be improved:**
+### **What can be improved:**
 
 - Adding loading states and better handling of the error states.   
 
