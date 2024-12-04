@@ -47,9 +47,9 @@
 			membershipExceptions = (
 				Mock/MockAddLocationViewModel.swift,
 				Mock/MockDeeplinkBuilder.swift,
-				Mock/MockLocationsController.swift,
 				Mock/MockLocationsListViewModel.swift,
 				Mock/MockLocationsRouter.swift,
+				Mock/MockLocationValidator.swift,
 				Mock/MockWikiAppChecker.swift,
 				Stub/StubLocation.swift,
 			);

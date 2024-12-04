@@ -9,9 +9,11 @@ import Foundation
 
 final class MockLocationsRouter: LocationsRouterProtocol {
   
-  private(set) var openExternalUrlCalled: Bool = false
+  private(set) var openExternalUrlCalled = false
+  private(set) var calledUrl: URL?
   
   func openExternalUrl(_ url: URL) {
     openExternalUrlCalled = true
+    calledUrl = url
   }
 }

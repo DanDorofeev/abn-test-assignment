@@ -12,15 +12,17 @@ final class LocationsListViewModelTests: XCTestCase {
   
   var sut: LocationsListViewModel!
   var locationsService: MockLocationsService!
-  private let asyncWaitDuration = 0.5
+  var wikiAppChecker: MockWikiAppChecker!
+  var locationsRouter: MockLocationsRouter!
+  var deeplinkBuilder: MockDeeplinkBuilder!
     
   override func setUp() {
     super.setUp()
     let locationsController = LocationsController()
     locationsService = MockLocationsService()
-    let wikiAppChecker = MockWikiAppChecker()
-    let deeplinkBuilder = MockDeeplinkBuilder()
-    let locationsRouter = MockLocationsRouter()
+    wikiAppChecker = MockWikiAppChecker()
+    deeplinkBuilder = MockDeeplinkBuilder()
+    locationsRouter = MockLocationsRouter()
     
     sut = LocationsListViewModel(
       locationsController: locationsController,
@@ -34,6 +36,9 @@ final class LocationsListViewModelTests: XCTestCase {
   override func tearDown() {
     sut = nil
     locationsService = nil
+    wikiAppChecker = nil
+    locationsRouter = nil
+    deeplinkBuilder = nil
     super.tearDown()
   }
   
@@ -44,115 +49,95 @@ final class LocationsListViewModelTests: XCTestCase {
   }
   
   func test_loadLocations_noResults() async throws {
+    // Given
     let expectedResults: LocationDTO = .emptyResults
-    let expectation = XCTestExpectation(description: "Empty results")
     locationsService.stubGetLocationsResponse = .success(expectedResults)
-    let task = Task {
-      await self.sut.loadLocations()
-    }
     
-    DispatchQueue.main.asyncAfter(deadline: .now() + asyncWaitDuration) {
-      expectation.fulfill()
-    }
-    
-    await fulfillment(of: [expectation], timeout: asyncWaitDuration)
-    task.cancel()
-    
-    XCTAssertTrue(self.locationsService.getLocationsCalled)
-    XCTAssertEqual(self.sut.locations, [])
-    XCTAssertFalse(self.sut.showError)
+    // When
+    await sut.loadLocations()
+    wait(self.locationsService.getLocationsCalled)
+        
+    // Then
+    XCTAssertTrue(locationsService.getLocationsCalled)
+    XCTAssertEqual(sut.locations, [])
+    XCTAssertFalse(sut.showError)
   }
   
   func test_loadLocations_whenSuccess_getResults() async throws {
     // Given
     let expectedResults: LocationDTO = .testLocations
-    let expectation = XCTestExpectation(description: "Locations are loaded succesfully")
     locationsService.stubGetLocationsResponse = .success(expectedResults)
     XCTAssertFalse(locationsService.getLocationsCalled)
     XCTAssertEqual(sut.locations, [])
     
     // When
-    let task = Task {
-      await self.sut.loadLocations()
-    }
-        
-    DispatchQueue.main.asyncAfter(deadline: .now() + asyncWaitDuration) {
-      expectation.fulfill()
-    }
+    await sut.loadLocations()
+    wait(self.locationsService.getLocationsCalled)
             
-    await fulfillment(of: [expectation], timeout: asyncWaitDuration)
-    task.cancel()
-    
     // Then
-    XCTAssertTrue(self.locationsService.getLocationsCalled)
-    XCTAssertEqual(self.sut.locations.count, 2)
-    XCTAssertEqual(self.sut.locations.first!.name, Location.fullLocation.name)
-    XCTAssertEqual(self.sut.locations.last!.lat, Location.emptyNameLocation.lat)
-    XCTAssertFalse(self.sut.showError)
+    XCTAssertTrue(locationsService.getLocationsCalled)
+    XCTAssertEqual(sut.locations.count, expectedResults.locations.count)
+    XCTAssertEqual(sut.locations.first!.name, expectedResults.locations.first!.name)
+    XCTAssertEqual(sut.locations.last!.lat, expectedResults.locations.last!.lat)
+    XCTAssertFalse(sut.showError)
   }
   
-  func test_loadLocations_whenError_errorIsShown() async throws {
+  func test_loadLocations_whenError_showErrorIsTrue() async throws {
+    // Given
     XCTAssertFalse(sut.showError)
     locationsService.stubGetLocationsResponse = .failure(NSError(domain: "Tests", code: 1))
-    let expectation = XCTestExpectation(description: "showError is set to true")
     
-    let task = Task {
-      await self.sut.loadLocations()
-    }
+    // When
+    await sut.loadLocations()
+    wait(self.locationsService.getLocationsCalled)
     
-    DispatchQueue.main.asyncAfter(deadline: .now() + asyncWaitDuration) {
-      expectation.fulfill()
-    }
-            
-    await fulfillment(of: [expectation], timeout: asyncWaitDuration)
-    task.cancel()
+    // Then
+    XCTAssertTrue(locationsService.getLocationsCalled)
+    XCTAssertEqual(sut.locations, [])
+    XCTAssertTrue(sut.showError)
+  }
+  
+  func test_openSelectedLocation_whenWikiIsMissing_routerNotCalled() {
+    // Given
+    let testLocation = Location.fullLocation
+    wikiAppChecker.canOpen = false
     
-    XCTAssertTrue(self.locationsService.getLocationsCalled)
-    XCTAssertEqual(self.sut.locations, [])
-    XCTAssertTrue(self.sut.showError)
+    // When
+    sut.openSelectedLocation(testLocation)
+    
+    // Then
+    XCTAssertTrue(wikiAppChecker.canOpenCalled)
+    XCTAssertTrue(sut.isWikiMissing)
+    XCTAssertFalse(locationsRouter.openExternalUrlCalled)
+  }
+  
+  func test_openSelectedLocation_whenWikiIsInstalled_routerCalled() {
+    // Given
+    let testLocation = Location.fullLocation
+    wikiAppChecker.canOpen = true
+    deeplinkBuilder.urlString = "https://google.com"
+    
+    // When
+    sut.openSelectedLocation(testLocation)
+    
+    // Then
+    XCTAssertTrue(wikiAppChecker.canOpenCalled)
+    XCTAssertFalse(sut.isWikiMissing)
+    XCTAssertTrue(locationsRouter.openExternalUrlCalled)
+  }
+  
+  func test_openSelectedLocation_whenWikiIsInstalled_urlIsOpened() {
+    // Given
+    let testLocation = Location.fullLocation
+    let expectedUrl = "https://google.com"
+    wikiAppChecker.canOpen = true
+    deeplinkBuilder.urlString = expectedUrl
+    
+    // When
+    sut.openSelectedLocation(testLocation)
+    
+    // Then
+    XCTAssertEqual(locationsRouter.calledUrl, URL(string: expectedUrl))
   }
 }
 
-protocol AsyncScheduler {
-  static func schedule(code: @escaping () async -> Void) -> AsyncScheduler
-}
-
-protocol AsyncSchedulerFactory {
-  @discardableResult
-  func create(code: @escaping () async -> Void) -> AsyncScheduler
-}
-
-class AsyncSchedulerSpy: AsyncScheduler {
-  var code: (() async -> Void)?
-  
-  init(code: @escaping () async -> Void) {
-    self.code = code
-  }
-  
-  static func schedule(code: @escaping () async -> Void) -> AsyncScheduler {
-    return AsyncSchedulerSpy(code: code)
-  }
-  
-  func execute() async {
-    await code?()
-  }
-}
-
-class AsyncSchedulerFactorySpy: AsyncSchedulerFactory {
-  var scheduleList: [AsyncSchedulerSpy] = []
-  
-  @discardableResult
-  func create(code: @escaping () async -> Void) -> AsyncScheduler {
-    let schedule = AsyncSchedulerSpy.schedule(code: code)
-    
-    if let schedule = schedule as? AsyncSchedulerSpy {
-        scheduleList.append(schedule)
-    }
-    
-    return schedule
-  }
-  
-  func executeLast() async {
-    await scheduleList.popLast()?.execute()
-  }
-}

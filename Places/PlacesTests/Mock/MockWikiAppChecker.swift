@@ -10,9 +10,10 @@ import Foundation
 final class MockWikiAppChecker: WikiAppCheckerProtocol {
   
   private(set) var canOpenCalled = false
+  var canOpen = false
   
   func canOpenWikiScheme() -> Bool {
     canOpenCalled = true
-    return true
+    return canOpen
   }
 }

@@ -15,7 +15,7 @@ protocol LocationsControllerProtocol: ObservableObject {
 }
 
 final class LocationsController: LocationsControllerProtocol {
-  @Published private var locations: [Location] = []
+  @Published private(set) var locations: [Location] = []
   
   var locationsPublisher: Published<[Location]>.Publisher {
     $locations
